@@ -63,11 +63,16 @@ export const userLogin=async (req, res)=>{
         })
         
         const token=generateToken(user._id);
-         // cookie তে token সেট করো
+        // res.cookie('jwt', token, {
+        // httpOnly: true,
+        // secure: process.env.NODE_ENV === 'production',
+        // sameSite: 'strict',
+        // maxAge: 30 * 24 * 60 * 60 * 1000,
+
         res.cookie('jwt', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: process.env.NODE_ENV === 'production' ? true : false,
+        sameSite: 'lax',   // 'strict' না দিয়ে 'lax' দাও, বেশিরভাগ ক্ষেত্রে কাজ করে
         maxAge: 30 * 24 * 60 * 60 * 1000,
         });
 
